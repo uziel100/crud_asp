@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CrudIlusionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="OrdenDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idOrden" Type="int" />
+          <Property Name="model" Type="varchar" MaxLength="50" />
+          <Property Name="place" Type="varchar" MaxLength="50" />
+          <Property Name="color" Type="varchar" MaxLength="50" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderManufacture">
+          <Key>
+            <PropertyRef Name="idOrden" />
+          </Key>
+          <Property Name="idOrden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="manufacturingOrder" Type="varchar" MaxLength="50" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
+          <Property Name="client" Type="varchar" MaxLength="50" />
+          <Property Name="cuTtype" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_OrdenDetail_OrderManufacture">
+          <End Role="OrderManufacture" Type="Self.OrderManufacture" Multiplicity="0..1" />
+          <End Role="OrdenDetail" Type="Self.OrdenDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderManufacture">
+              <PropertyRef Name="idOrden" />
+            </Principal>
+            <Dependent Role="OrdenDetail">
+              <PropertyRef Name="idOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrudIlusionModelStoreContainer">
+          <EntitySet Name="OrdenDetail" EntityType="Self.OrdenDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderManufacture" EntityType="Self.OrderManufacture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OrdenDetail_OrderManufacture" Association="Self.FK_OrdenDetail_OrderManufacture">
+            <End Role="OrderManufacture" EntitySet="OrderManufacture" />
+            <End Role="OrdenDetail" EntitySet="OrdenDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CrudIlusionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="OrdenDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrden" Type="Int32" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="place" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="OrderManufacture" Relationship="Self.FK_OrdenDetail_OrderManufacture" FromRole="OrdenDetail" ToRole="OrderManufacture" />
+        </EntityType>
+        <EntityType Name="OrderManufacture">
+          <Key>
+            <PropertyRef Name="idOrden" />
+          </Key>
+          <Property Name="idOrden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="manufacturingOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cuTtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrdenDetails" Relationship="Self.FK_OrdenDetail_OrderManufacture" FromRole="OrderManufacture" ToRole="OrdenDetail" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_OrdenDetail_OrderManufacture">
+          <End Role="OrderManufacture" Type="Self.OrderManufacture" Multiplicity="0..1" />
+          <End Role="OrdenDetail" Type="Self.OrdenDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderManufacture">
+              <PropertyRef Name="idOrden" />
+            </Principal>
+            <Dependent Role="OrdenDetail">
+              <PropertyRef Name="idOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrudIlusionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrdenDetails" EntityType="Self.OrdenDetail" />
+          <EntitySet Name="OrderManufactures" EntityType="Self.OrderManufacture" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_OrdenDetail_OrderManufacture" Association="Self.FK_OrdenDetail_OrderManufacture">
+            <End Role="OrderManufacture" EntitySet="OrderManufactures" />
+            <End Role="OrdenDetail" EntitySet="OrdenDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CrudIlusionModelStoreContainer" CdmEntityContainer="CrudIlusionEntities">
+          <EntitySetMapping Name="OrdenDetails">
+            <EntityTypeMapping TypeName="CrudIlusionModel.OrdenDetail">
+              <MappingFragment StoreEntitySet="OrdenDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idOrden" ColumnName="idOrden" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderManufactures">
+            <EntityTypeMapping TypeName="CrudIlusionModel.OrderManufacture">
+              <MappingFragment StoreEntitySet="OrderManufacture">
+                <ScalarProperty Name="idOrden" ColumnName="idOrden" />
+                <ScalarProperty Name="manufacturingOrder" ColumnName="manufacturingOrder" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="client" ColumnName="client" />
+                <ScalarProperty Name="cuTtype" ColumnName="cuTtype" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CrudIlusionModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

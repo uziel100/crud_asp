@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <h1>Tabla de Órdenes de Fabricación</h1>
+
+    <!-- Buscador -->
+    <div class="form-group">
+        <input type="text" id="txtBusqueda" class="form-control" placeholder="Buscar...">
+    </div>
+
+    <div id="listTable"></div>
+</div>
+
+<!-- Código JavaScript para filtrar las filas de la tabla según el texto de búsqueda -->
+<script>
+
+    var urlGet = "@Url.Content("~/OrderManufacturing/List")"
+
+
+    function Get() {
+        
+
+        fetch(urlGet)
+            .then(data => {
+                return data.text();
+            })
+            .then(data => {
+                document.getElementById('listTable').innerHTML = data;
+            })
+    }
+
+
+    Get();
+</script>
