@@ -1,0 +1,86 @@
+﻿@model ExamenOracle01.Models.ViewModel.OrderManufactureViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h3>Crear Orden</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Client)
+                @Html.TextBoxFor(d => d.Client, new { id = "Client", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.CutType)
+                @Html.TextBoxFor(d => d.CutType, new { id = "CutType", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.ManufacturingOrder)
+                @Html.TextBoxFor(d => d.ManufacturingOrder, new { id = "ManufacturingOrder", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.Status)
+                @Html.DropDownListFor(d => d.Status, new SelectList(new[]
+                    {
+                        new { Value = "Activo", Text = "Activo" },
+                        new { Value = "Pendiente", Text = "Pendiente" },
+                        new { Value = "Finalizado", Text = "Finalizado" }
+                    }, "Value", "Text"), new { id = "Status", @class = "form-control" })
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-info" onclick="redirectBack()">Cancelar</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" onclick="createOrder()" class="btn btn-primary">Crear Registro</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var url = "@Url.Content("~/OrderManufacturing/Save")"
+
+    function createOrder() {
+
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                Status: document.getElementById("Status").value,
+                Client: document.getElementById("Client").value,
+                ManufacturingOrder: document.getElementById("ManufacturingOrder").value,
+                CutType: document.getElementById("CutType").value,
+            }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(resp => {
+            if (resp.ok) {
+                return resp.text();
+            }
+            else {
+                alert("Error al ejecutar :(")
+            }
+        }).then(data => {
+            if (data != "1") {
+                alert(data)
+            } else {
+                document.location.href = "@Url.Content("~/")"
+            }
+
+        })
+    }
+
+    function redirectBack() {
+        document.location.href = "@Url.Content("~/")"
+    }
+</script>
+
+
+

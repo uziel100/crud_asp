@@ -5,29 +5,47 @@
     ViewBag.Title = "List";
 }
 
-<!-- Tabla -->
-<table id="tablaOrdenes" class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID Orden</th>
-            <th>Orden de Fabricación</th>
-            <th>Estatus</th>
-            <th>Cliente</th>
-            <th>Tipo de Corte</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Los datos de las órdenes de fabricación se generarán dinámicamente en el código de JavaScript -->
-        @foreach (var item in Model)
-        {
+<div class="container">
+    <div class="d-flex justify-content-end">
+        <a href="/OrderManufacturing/Create" class="btn btn-primary">Agregar</a>
+    </div>
+    <!-- Tabla -->
+    <table id="tablaOrdenes" class="table table-striped">
+        <thead>
             <tr>
-                <td>@item.IdOrden</td>
-                <td>@item.ManufacturingOrder</td>
-                <td>@item.Status</td>
-                <td>@item.Client</td>
-                <td>@item.CutType</td>
+                <th>ID Orden</th>
+                <th>Orden de Fabricación</th>
+                <th>Estatus</th>
+                <th>Cliente</th>
+                <th>Tipo de Corte</th>
+                <th>Acciones</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            <!-- Los datos de las órdenes de fabricación se generarán dinámicamente en el código de JavaScript -->
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IdOrden</td>
+                    <td>@item.ManufacturingOrder</td>
+                    <td>@item.Status</td>
+                    <td>@item.Client</td>
+                    <td>@item.CutType</td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <button class="btn btn-primary" onclick="document.location.href = '@Url.Content("~/OrderManufacturing/Edit/" + item.IdOrden)'">Editar</button>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <button class="btn btn-danger" onclick="onDelete(@item.IdOrden)">Eliminar</button>
+                            </div>
+                        </div>
+                    </td>
 
-    </tbody>
-</table>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>

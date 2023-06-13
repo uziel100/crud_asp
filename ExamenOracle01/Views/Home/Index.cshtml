@@ -17,11 +17,10 @@
 <script>
 
     var urlGet = "@Url.Content("~/OrderManufacturing/List")"
+    var urlDelete = "@Url.Content("~/OrderManufacturing/Delete")"
 
 
     function Get() {
-        
-
         fetch(urlGet)
             .then(data => {
                 return data.text();
@@ -29,6 +28,33 @@
             .then(data => {
                 document.getElementById('listTable').innerHTML = data;
             })
+    }
+
+    function onDelete(id) {
+        fetch(urlDelete, {
+            method: "POST",
+            body: JSON.stringify({
+                Id: id
+            }),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(resp => {
+            if (resp.ok) {
+                return resp.text();
+            }
+            else {
+                alert("Error al ejecutar :(")
+            }
+        }).then(data => {
+            if (data != "1") {
+                alert(data)
+            } else {
+                document.location.href = "@Url.Content("~/")"
+            }
+
+        })
     }
 
 
